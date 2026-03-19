@@ -40,6 +40,16 @@
 <body>
 
   <div class="tekst">Kocham mojego słodziaka❤️❤️</div>
+  <button class="tekst" style="color: white;" onclick="klik()">Jak bardzo go kocham?</button>
+  <script>
+    let g = document.getElementsByTagName("button");
+    function klik(){
+      const div = document.createElement("div");
+      div.textContent = "Bardzo";
+      div.className = "tekst";
 
+      document.body.appendChild(div);
+    }
+  </script>
 </body>
 </html>
