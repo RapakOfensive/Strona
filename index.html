@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Strona dla słodziaka</title>
+  
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: grid;
+      place-items: center; 
+      
+      background: #0f0f1a;
+      color: #e0e0ff;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .tekst {
+      font-size: 3.5rem;
+      font-weight: 600;
+      text-align: center;
+      padding: 1rem 2rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+    @keyframes subtlePulse {
+      0%, 100% { opacity: 0.92; }
+      50%      { opacity: 1; }
+    }
+    .tekst {
+      animation: subtlePulse 8s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="tekst">Kocham mojego słodziaka</div>
+
+</body>
+</html>
