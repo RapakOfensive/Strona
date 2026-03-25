@@ -104,8 +104,15 @@ background: #1d011af6;
     </div>
 
     <div id="id2" class="tab-content">
-      <div class="tekst"> 💕</div>
-      <div class="tekst" style="font-size: 2vw;">Najprawdziwszy słodziaś ❤️</div>
+    <div class="tekst">Mam go od 14.11.2024 r.</div>
+    <div class="tekst" style="font-size: 4vw;">Co daje:</div>
+    <div class="tekst" style="font-size: 3vw;" id="miesiace">0 miesięcy</div>
+    <div class="tekst" style="font-size: 3vw;" id="dni">0 dni</div>
+    <div class="tekst" style="font-size: 3vw;" id="godziny">0 godzin</div>
+    <div class="tekst" style="font-size: 3vw;" id="minuty">0 minut</div>
+    <div class="tekst" style="font-size: 3vw;" id="sekundy">0 sekund</div>
+    <div class="tekst" style="font-size: 3vw; margin-top: 15px;" id="licznik">
+    0 lat, 0 miesięcy, 0 dni, 0 godzin, 0 minut i 0 sekund</div>
     </div>
 
     <div id="id3" class="tab-content">
@@ -156,6 +163,93 @@ background: #1d011af6;
         });
       });
     });
+
+    const dataPoczatkowa = new Date("2024-11-14 00:00:00");
+
+    function aktualizujLicznik() {
+        const teraz = new Date();
+        const roznicaMs = teraz - dataPoczatkowa;
+
+        const sekundyCalk = Math.floor(roznicaMs / 1000);
+
+        const sekundy = sekundyCalk;
+        const minuty  = Math.floor(sekundyCalk / 60);
+        const godziny = Math.floor(sekundyCalk / 3600);
+        const dni = Math.floor(sekundyCalk / 86400);
+        const miesiace = Math.floor(dni / 30.436875);
+
+        document.getElementById("miesiace").textContent = miesiace + (miesiace === 1 ? " miesiąc" : " miesięcy");
+        document.getElementById("dni").textContent     = dni     + (dni     === 1 ? " dzień"   : " dni");
+        document.getElementById("godziny").textContent = godziny + (godziny === 1 ? " godzina" : " godzin");
+        document.getElementById("minuty").textContent  = minuty  + (minuty  === 1 ? " minuta"  : " minut");
+        document.getElementById("sekundy").textContent = sekundy + (sekundy === 1 ? " sekunda" : " sekund");
+    }
+    setInterval(aktualizujLicznik, 1000);
+    aktualizujLicznik();
+    
+function aktualizuj() {
+    const teraz = new Date();
+    let diff = teraz - dataPoczatkowa;
+
+    const sekundy = Math.floor(diff / 1000) % 60;
+    const minuty  = Math.floor(diff / 60000) % 60;
+    const godziny = Math.floor(diff / 3600000) % 24;
+
+    let temp = new Date(dataPoczatkowa);
+    let lata = 0;
+    let miesiace = 0;
+
+    while (temp.getFullYear() < teraz.getFullYear() || 
+           (temp.getFullYear() === teraz.getFullYear() && temp.getMonth() <= teraz.getMonth())) {
+        temp.setMonth(temp.getMonth() + 1);
+        miesiace++;
+        
+        if (miesiace === 12) {
+            lata++;
+            miesiace = 0;
+        }
+    }
+    miesiace--;
+
+    const dataPoLatachMiesiacach = new Date(dataPoczatkowa);
+    dataPoLatachMiesiacach.setFullYear(dataPoLatachMiesiacach.getFullYear() + lata);
+    dataPoLatachMiesiacach.setMonth(dataPoLatachMiesiacach.getMonth() + miesiace);
+
+    const dni = Math.floor((teraz - dataPoLatachMiesiacach) / 86400000);
+
+    let tekst = "";
+
+    if (lata > 0) {
+        tekst += `${lata} `;
+        tekst += (lata === 1) ? "rok" : (lata < 5 ? "lata" : "lat");
+        tekst += ", ";
+    }
+
+    tekst += `${miesiace} miesiąc`;
+    if (miesiace !== 1){
+      if(miesiace < 5 && miesiace > 1){
+        tekst = tekst.replace("miesiąc", "miesiące")
+      }else{
+        tekst = tekst.replace("miesiąc", "miesięcy")
+      }
+    }
+
+    tekst += `, ${dni} dzień`;
+    if (dni !== 1) tekst = tekst.replace("dzień", "dni");
+
+    tekst += `, ${godziny} godzin`;
+    if (godziny === 1) tekst = tekst.replace("godzin", "godzina");
+
+    tekst += `, ${minuty} minut`;
+    if (minuty === 1) tekst = tekst.replace("minut", "minuta");
+
+    tekst += ` i ${sekundy} sekund`;
+    if (sekundy === 1) tekst = tekst.replace("sekund", "sekunda");
+
+    document.getElementById("licznik").textContent = tekst;
+}
+setInterval(aktualizuj, 1000);
+aktualizuj();
   </script>
 </body>
 </html>
