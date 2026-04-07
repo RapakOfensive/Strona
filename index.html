@@ -215,7 +215,12 @@ function aktualizuj() {
     dataPoLatachMiesiacach.setFullYear(dataPoLatachMiesiacach.getFullYear() + lata);
     dataPoLatachMiesiacach.setMonth(dataPoLatachMiesiacach.getMonth() + miesiace);
 
-    const dni = Math.floor((teraz - dataPoLatachMiesiacach) / 86400000);
+    let dni = Math.floor((teraz - dataPoLatachMiesiacach) / 86400000);
+    if (dni < 0) {
+        miesiace--;
+        const ostatniDzienPoprzedniego = new Date(teraz.getFullYear(), teraz.getMonth(), 0).getDate();
+        dni += ostatniDzienPoprzedniego;
+    }
 
     let tekst = "";
 
