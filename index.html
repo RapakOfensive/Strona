@@ -35,7 +35,7 @@
       font-weight: bold;
       border-bottom: #1d011af6;
     }
-.tab-content {
+    .tab-content {
       display: none;
       padding: 30px;
       background: #1d011af6;
@@ -55,15 +55,14 @@
 
     h1 {
       margin-bottom: 1rem;
-color: #007bff;
+      color: #007bff;
     }
     body {
       margin: 0;
       height: 100vh;
-display: flex;
+      display: flex;
       flex-direction: column; 
-      
-background: #1d011af6;
+      background: #1d011af6;
       color: #e0e0ff;
       font-family: system-ui, -apple-system, sans-serif;
     }
@@ -79,6 +78,22 @@ background: #1d011af6;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
       margin:10px;
     }
+    .countdown {
+    font-size: 2.2vw;
+    font-weight: bold;
+    text-align: center;
+    margin: 15px 0;
+    letter-spacing: 2px;
+    }
+
+    .countdown span {
+      font-size: 2.4vw;
+      color: white;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 4px 8px;
+      border-radius: 6px;
+      margin: 0 3px;
+}
     @keyframes subtlePulse {
       0%, 100% { opacity: 0.92; }
       50%      { opacity: 1; }
@@ -116,8 +131,15 @@ background: #1d011af6;
     </div>
 
     <div id="id3" class="tab-content">
-      <div class="tekst">Przekochany</div>
-      <button class="tekst" style="color: white; font-size: 2vw; width:95%;">Słodziaczek</button>
+      <div class="tekst">Data to: 14.05.2026r.</div>
+        <div class="tekst">Pozostało:</div>
+        <div id="countdown" class="countdown">
+            <div class="tekst" id="months">00</div>
+            <div class="tekst" id="days">00</div>
+            <div class="tekst" id="hours">00</div>
+            <div class="tekst" id="minutes">00</div>
+            <div class="tekst" id="seconds">00</div>
+        </div>
     </div>
 
     <div id="id4" class="tab-content">
@@ -255,6 +277,63 @@ function aktualizuj() {
 }
 setInterval(aktualizuj, 1000);
 aktualizuj();
+
+// ==================== ZMIEŃ TĘ DATĘ ====================
+const dataWydarzenia = new Date("2026-05-14 00:00:00");
+// =====================================================
+function pobierzNastepneWydarzenie() {
+    const teraz = new Date();
+    let data = new Date(dataWydarzenia);
+
+    while (data <= teraz) {
+        data.setMonth(data.getMonth() + 6);
+    }
+
+    return data;
+}
+function aktualizuj2() {
+    const teraz = new Date();
+    let diff = dataWydarzenia - teraz;
+
+    if (diff <= 0) {
+        document.getElementById("miesiace").textContent = "0";
+        document.getElementById("dni").textContent = "00";
+        document.getElementById("godziny").textContent = "00";
+        document.getElementById("minuty").textContent = "00";
+        document.getElementById("sekundy").textContent = "00";
+        return;
+    }
+
+    let miesiace = (dataWydarzenia.getFullYear() - teraz.getFullYear()) * 12;
+    miesiace += dataWydarzenia.getMonth() - teraz.getMonth();
+
+    if (dataWydarzenia.getDate() < teraz.getDate()) {
+        miesiace--;
+    }
+
+    if (miesiace < 0) miesiace = 0;
+
+    const dataTemp = new Date(teraz);
+    dataTemp.setMonth(dataTemp.getMonth() + miesiace);
+
+    let pozostalyCzas = dataWydarzenia - dataTemp;
+
+    const dni     = Math.floor(pozostalyCzas / 86400000);
+    pozostalyCzas %= 86400000;
+    const godziny = Math.floor(pozostalyCzas / 3600000);
+    pozostalyCzas %= 3600000;
+    const minuty  = Math.floor(pozostalyCzas / 60000);
+    pozostalyCzas %= 60000;
+    const sekundy = Math.floor(pozostalyCzas / 1000);
+
+        document.getElementById("months").textContent = miesiace + (miesiace === 1 ? " miesiąc" : " miesięcy");
+        document.getElementById("days").textContent     = dni     + (dni     === 1 ? " dzień"   : " dni");
+        document.getElementById("hours").textContent = godziny + (godziny === 1 ? " godzina" : " godzin");
+        document.getElementById("minutes").textContent  = minuty  + (minuty  === 1 ? " minuta"  : " minut");
+        document.getElementById("seconds").textContent = sekundy + (sekundy === 1 ? " sekunda" : " sekund");
+}
+setInterval(aktualizuj2, 1000);
+aktualizuj2();
   </script>
 </body>
 </html>
