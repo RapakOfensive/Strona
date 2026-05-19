@@ -131,7 +131,7 @@
     </div>
 
     <div id="id3" class="tab-content">
-      <div class="tekst">Data to: 14.05.2026r.</div>
+      <div class="tekst" id="date">Data to: </div>
         <div class="tekst">Pozostało:</div>
         <div id="countdown" class="countdown">
             <div class="tekst" id="months">00</div>
@@ -279,7 +279,8 @@ setInterval(aktualizuj, 1000);
 aktualizuj();
 
 // ==================== ZMIEŃ TĘ DATĘ ====================
-const dataWydarzenia = new Date("2026-05-14 00:00:00");
+let dataWydarzenia = new Date("2026-05-14 00:00:00");
+let data1 = document.getElementById("date");
 // =====================================================
 function pobierzNastepneWydarzenie() {
     const teraz = new Date();
@@ -287,13 +288,18 @@ function pobierzNastepneWydarzenie() {
 
     while (data <= teraz) {
         data.setMonth(data.getMonth() + 6);
+        data.textContent= "Data to:" + "14.05.2027r.";
     }
 
     return data;
 }
 function aktualizuj2() {
+
+    
     const teraz = new Date();
+    dataWydarzenia = pobierzNastepneWydarzenie();
     let diff = dataWydarzenia - teraz;
+    data1.textContent ="Data to: "+ "14.11.2026r.";
 
     if (diff <= 0) {
         document.getElementById("miesiace").textContent = "0";
