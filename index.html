@@ -33,7 +33,6 @@
     .tab-button.active {
       background: rgba(129, 22, 84, 0.432);
       font-weight: bold;
-      border-bottom: #1d011af6;
     }
     .tab-content {
       display: none;
@@ -42,10 +41,8 @@
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: 16px;
-      margin: 20px 0;
+      margin: 20px auto;
       max-width: 90%;
-      margin-left: auto;
-      margin-right: auto;
       min-height: 200px;
     }
 
@@ -79,21 +76,23 @@
       margin:10px;
     }
     .countdown {
-    font-size: 2.2vw;
-    font-weight: bold;
-    text-align: center;
-    margin: 15px 0;
-    letter-spacing: 2px;
+      font-size: 2.2vw;
+      font-weight: bold;
+      text-align: center;
+      margin: 15px 0;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
     .countdown span {
       font-size: 2.4vw;
       color: white;
       background: rgba(0, 0, 0, 0.4);
-      padding: 4px 8px;
+      padding: 4px 12px;
       border-radius: 6px;
-      margin: 0 3px;
-}
+    }
+
     @keyframes subtlePulse {
       0%, 100% { opacity: 0.92; }
       50%      { opacity: 1; }
@@ -104,14 +103,15 @@
   </style>
 </head>
 <body>
+
 <menu class="tabs" style="position: sticky; top: 0; z-index: 10;">
     <button class="tab-button active" data-tab="id1">Mój</button>
     <button class="tab-button" data-tab="id2">Kochany</button>
     <button class="tab-button" data-tab="id3">Najdogodniejszy</button>
     <button class="tab-button" data-tab="id4">Słodziaś</button>
-  </menu>
+</menu>
 
-  <main style="flex: 1; overflow-y: auto; padding: 20px; width: 100%;">
+<main style="flex: 1; overflow-y: auto; padding: 20px; width: 100%;">
     <div class="tekst">Kocham mojego słodziaka❤️❤️</div>
     
     <div id="id1" class="tab-content active">
@@ -119,27 +119,28 @@
     </div>
 
     <div id="id2" class="tab-content">
-    <div class="tekst">Mam go od 14.11.2024 r.</div>
-    <div class="tekst" style="font-size: 4vw;">Co daje:</div>
-    <div class="tekst" style="font-size: 3vw;" id="miesiace">0 miesięcy</div>
-    <div class="tekst" style="font-size: 3vw;" id="dni">0 dni</div>
-    <div class="tekst" style="font-size: 3vw;" id="godziny">0 godzin</div>
-    <div class="tekst" style="font-size: 3vw;" id="minuty">0 minut</div>
-    <div class="tekst" style="font-size: 3vw;" id="sekundy">0 sekund</div>
-    <div class="tekst" style="font-size: 3vw; margin-top: 15px;" id="licznik">
-    0 lat, 0 miesięcy, 0 dni, 0 godzin, 0 minut i 0 sekund</div>
+      <div class="tekst">Mam go od 14.11.2024 r.</div>
+      <div class="tekst" style="font-size: 4vw;">Co daje:</div>
+      <div class="tekst" style="font-size: 3vw;" id="miesiace">0 miesięcy</div>
+      <div class="tekst" style="font-size: 3vw;" id="dni">0 dni</div>
+      <div class="tekst" style="font-size: 3vw;" id="godziny">0 godzin</div>
+      <div class="tekst" style="font-size: 3vw;" id="minuty">0 minut</div>
+      <div class="tekst" style="font-size: 3vw;" id="sekundy">0 sekund</div>
+      <div class="tekst" style="font-size: 3vw; margin-top: 15px;" id="licznik">
+        0 lat, 0 miesięcy, 0 dni, 0 godzin, 0 minut i 0 sekund
+      </div>
     </div>
 
     <div id="id3" class="tab-content">
       <div class="tekst" id="date">Data to: </div>
-        <div class="tekst">Pozostało:</div>
-        <div id="countdown" class="countdown">
-            <div class="tekst" id="months">00</div>
-            <div class="tekst" id="days">00</div>
-            <div class="tekst" id="hours">00</div>
-            <div class="tekst" id="minutes">00</div>
-            <div class="tekst" id="seconds">00</div>
-        </div>
+      <div class="tekst">Pozostało:</div>
+      <div id="countdown" class="countdown">
+        <div class="tekst" id="months" style="font-size: 4vw;">00</div>
+        <div class="tekst" id="days" style="font-size: 4vw;">00</div>
+        <div class="tekst" id="hours" style="font-size: 4vw;">00</div>
+        <div class="tekst" id="minutes" style="font-size: 4vw;">00</div>
+        <div class="tekst" id="seconds" style="font-size: 4vw;">00</div>
+      </div>
     </div>
 
     <div id="id4" class="tab-content">
@@ -148,24 +149,19 @@
     </div>
   </main>
 
-
-
   <script>
-    let g = document.getElementsByTagName("button");
-    let m = document.getElementById("id1");
+    // ==================== KLIKANIE SERDECZEK ====================
     let k = 0;
-    let s = "❤️";
+    const s = "❤️";
     function klik(){
       k++;
       const div = document.createElement("div");
-      div.textContent = "Bardzo ";
-      for(let i=0;i<k;i++){
-        div.textContent += s;
-      };
+      div.textContent = "Bardzo " + s.repeat(k);
       div.className = "tekst";
-      m.append(div);
+      document.getElementById("id1").append(div);
     }
 
+    // ==================== TABS ====================
     document.addEventListener('DOMContentLoaded', () => {
       const buttons = document.querySelectorAll('.tab-button');
       const contents = document.querySelectorAll('.tab-content');
@@ -179,167 +175,116 @@
       }
 
       buttons.forEach(button => {
-        button.addEventListener('click', () => {
-          const tabId = button.getAttribute('data-tab');
-          showTab(tabId);
-        });
+        button.addEventListener('click', () => showTab(button.getAttribute('data-tab')));
       });
     });
 
+    // ==================== LICZNIK OD ZNAJOMOŚCI ====================
     const dataPoczatkowa = new Date("2024-11-14 00:00:00");
 
     function aktualizujLicznik() {
-        const teraz = new Date();
-        const roznicaMs = teraz - dataPoczatkowa;
+      const teraz = new Date();
+      const roznicaMs = teraz - dataPoczatkowa;
+      const sekundyCalk = Math.floor(roznicaMs / 1000);
 
-        const sekundyCalk = Math.floor(roznicaMs / 1000);
+      const sekundy = sekundyCalk;
+      const minuty  = Math.floor(sekundyCalk / 60);
+      const godziny = Math.floor(sekundyCalk / 3600);
+      const dni = Math.floor(sekundyCalk / 86400);
+      const miesiace = Math.floor(dni / 30.44);
 
-        const sekundy = sekundyCalk;
-        const minuty  = Math.floor(sekundyCalk / 60);
-        const godziny = Math.floor(sekundyCalk / 3600);
-        const dni = Math.floor(sekundyCalk / 86400);
-        const miesiace = Math.floor(dni / 30.436875);
-
-        document.getElementById("miesiace").textContent = miesiace + (miesiace === 1 ? " miesiąc" : " miesięcy");
-        document.getElementById("dni").textContent     = dni     + (dni     === 1 ? " dzień"   : " dni");
-        document.getElementById("godziny").textContent = godziny + (godziny === 1 ? " godzina" : " godzin");
-        document.getElementById("minuty").textContent  = minuty  + (minuty  === 1 ? " minuta"  : " minut");
-        document.getElementById("sekundy").textContent = sekundy + (sekundy === 1 ? " sekunda" : " sekund");
+      document.getElementById("sekundy").textContent = sekundy + (sekundy === 1 ? " sekunda" : " sekund");
+      document.getElementById("minuty").textContent  = minuty  + (minuty  === 1 ? " minuta"  : " minut");
+      document.getElementById("godziny").textContent = godziny + (godziny === 1 ? " godzina" : " godzin");
+      document.getElementById("dni").textContent     = dni     + (dni     === 1 ? " dzień"   : " dni");
+      document.getElementById("miesiace").textContent = `${miesiace} ${miesiace === 1 ? "miesiąc" : (miesiace < 5 ? "miesiące" : "miesięcy")} `;
     }
     setInterval(aktualizujLicznik, 1000);
     aktualizujLicznik();
-    
-function aktualizuj() {
-    const teraz = new Date();
-    let diff = teraz - dataPoczatkowa;
 
-    const sekundy = Math.floor(diff / 1000) % 60;
-    const minuty  = Math.floor(diff / 60000) % 60;
-    const godziny = Math.floor(diff / 3600000) % 24;
+    function aktualizujPelnyLicznik() {
+      const teraz = new Date();
+      let diff = teraz - dataPoczatkowa;
 
-    let temp = new Date(dataPoczatkowa);
-    let lata = 0;
-    let miesiace = 0;
+      const sekundy = Math.floor(diff / 1000) % 60;
+      const minuty  = Math.floor(diff / 60000) % 60;
+      const godziny = Math.floor(diff / 3600000) % 24;
 
-    while (temp.getFullYear() < teraz.getFullYear() || 
-           (temp.getFullYear() === teraz.getFullYear() && temp.getMonth() <= teraz.getMonth())) {
+      let lata = 0;
+      let miesiace = 0;
+      let temp = new Date(dataPoczatkowa);
+
+      while (temp <= teraz) {
         temp.setMonth(temp.getMonth() + 1);
         miesiace++;
-        
         if (miesiace === 12) {
-            lata++;
-            miesiace = 0;
+          lata++;
+          miesiace = 0;
         }
-    }
-    miesiace--;
-
-    const dataPoLatachMiesiacach = new Date(dataPoczatkowa);
-    dataPoLatachMiesiacach.setFullYear(dataPoLatachMiesiacach.getFullYear() + lata);
-    dataPoLatachMiesiacach.setMonth(dataPoLatachMiesiacach.getMonth() + miesiace);
-
-    let dni = Math.floor((teraz - dataPoLatachMiesiacach) / 86400000);
-    if (dni < 0) {
-        miesiace--;
-        const ostatniDzienPoprzedniego = new Date(teraz.getFullYear(), teraz.getMonth(), 0).getDate();
-        dni += ostatniDzienPoprzedniego;
-    }
-
-    let tekst = "";
-
-    if (lata > 0) {
-        tekst += `${lata} `;
-        tekst += (lata === 1) ? "rok" : (lata < 5 ? "lata" : "lat");
-        tekst += ", ";
-    }
-
-    tekst += `${miesiace} miesiąc`;
-    if (miesiace !== 1){
-      if(miesiace < 5 && miesiace > 1){
-        tekst = tekst.replace("miesiąc", "miesiące")
-      }else{
-        tekst = tekst.replace("miesiąc", "miesięcy")
       }
+      miesiace--;
+
+      let tekst = "";
+      if (lata > 0) {
+        tekst += `${lata} ${lata === 1 ? "rok" : (lata < 5 ? "lata" : "lat")}, `;
+      }
+      tekst += `${miesiace} ${miesiace === 1 ? "miesiąc" : (miesiace < 5 ? "miesiące" : "miesięcy")}, `;
+      tekst += `${godziny} ${godziny === 1 ? "godzina" : "godzin"}, `;
+      tekst += `${minuty} ${minuty === 1 ? "minuta" : "minut"} i `;
+      tekst += `${sekundy} ${sekundy === 1 ? "sekunda" : "sekund"}`;
+
+      document.getElementById("licznik").textContent = tekst;
     }
+    setInterval(aktualizujPelnyLicznik, 1000);
+    aktualizujPelnyLicznik();
 
-    tekst += `, ${dni} dzień`;
-    if (dni !== 1) tekst = tekst.replace("dzień", "dni");
+    // ==================== COUNTDOWN DO NASTĘPNEGO WYDARZENIA ====================
+    let dataWydarzenia = new Date("2026-05-14 00:00:00");
 
-    tekst += `, ${godziny} godzin`;
-    if (godziny === 1) tekst = tekst.replace("godzin", "godzina");
+    function pobierzNastepneWydarzenie() {
+      const teraz = new Date();
+      let data = new Date(dataWydarzenia);
 
-    tekst += `, ${minuty} minut`;
-    if (minuty === 1) tekst = tekst.replace("minut", "minuta");
-
-    tekst += ` i ${sekundy} sekund`;
-    if (sekundy === 1) tekst = tekst.replace("sekund", "sekunda");
-
-    document.getElementById("licznik").textContent = tekst;
-}
-setInterval(aktualizuj, 1000);
-aktualizuj();
-
-// ==================== ZMIEŃ TĘ DATĘ ====================
-let dataWydarzenia = new Date("2026-05-14 00:00:00");
-let data1 = document.getElementById("date");
-// =====================================================
-function pobierzNastepneWydarzenie() {
-    const teraz = new Date();
-    let data = new Date(dataWydarzenia);
-
-    while (data <= teraz) {
+      while (data <= teraz) {
         data.setMonth(data.getMonth() + 6);
-        data.textContent= "Data to:" + "14.05.2027r.";
+      }
+      return data;
     }
 
-    return data;
-}
-function aktualizuj2() {
+    function aktualizujCountdown() {
+      const teraz = new Date();
+      const nastepne = pobierzNastepneWydarzenie();
+      
+      document.getElementById("date").textContent = 
+        `Data to: ${nastepne.getDate().toString().padStart(2,'0')}.${(nastepne.getMonth()+1).toString().padStart(2,'0')}.${nastepne.getFullYear()} r.`;
 
-    
-    const teraz = new Date();
-    dataWydarzenia = pobierzNastepneWydarzenie();
-    let diff = dataWydarzenia - teraz;
-    data1.textContent ="Data to: "+ "14.11.2026r.";
+      let diff = nastepne - teraz;
 
-    if (diff <= 0) {
-        document.getElementById("miesiace").textContent = "0";
-        document.getElementById("dni").textContent = "00";
-        document.getElementById("godziny").textContent = "00";
-        document.getElementById("minuty").textContent = "00";
-        document.getElementById("sekundy").textContent = "00";
+      if (diff <= 0) {
+        document.querySelectorAll('#months, #days, #hours, #minutes, #seconds').forEach(el => el.textContent = "00");
         return;
+      }
+
+      const miesiace = Math.floor(diff / (1000 * 60 * 60 * 24 * 30.44));
+      diff %= (1000 * 60 * 60 * 24 * 30.44);
+
+      const dni     = Math.floor(diff / 86400000);
+      diff %= 86400000;
+      const godziny = Math.floor(diff / 3600000);
+      diff %= 3600000;
+      const minuty  = Math.floor(diff / 60000);
+      diff %= 60000;
+      const sekundy = Math.floor(diff / 1000);
+
+      document.getElementById("months").textContent  = miesiace.toString().padStart(1, '0') + ` ${miesiace === 1 ? "miesiąc" : (miesiace < 5 ? "miesiące" : "miesięcy")} `;
+      document.getElementById("days").textContent    = dni.toString().padStart(1, '0') + ` ${dni === 1 ? "dzień" : "dni"}`;
+      document.getElementById("hours").textContent   = godziny.toString().padStart(1, '0') + ` ${godziny === 1 ? "godzina" : "godzin"}`;
+      document.getElementById("minutes").textContent = minuty.toString().padStart(1, '0') + ` ${minuty === 1 ? "minuta" : "minut"}`;
+      document.getElementById("seconds").textContent = sekundy.toString().padStart(1, '0') + ` ${sekundy === 1 ? "sekunda" : "sekund"}`;
     }
 
-    let miesiace = (dataWydarzenia.getFullYear() - teraz.getFullYear()) * 12;
-    miesiace += dataWydarzenia.getMonth() - teraz.getMonth();
-
-    if (dataWydarzenia.getDate() < teraz.getDate()) {
-        miesiace--;
-    }
-
-    if (miesiace < 0) miesiace = 0;
-
-    const dataTemp = new Date(teraz);
-    dataTemp.setMonth(dataTemp.getMonth() + miesiace);
-
-    let pozostalyCzas = dataWydarzenia - dataTemp;
-
-    const dni     = Math.floor(pozostalyCzas / 86400000);
-    pozostalyCzas %= 86400000;
-    const godziny = Math.floor(pozostalyCzas / 3600000);
-    pozostalyCzas %= 3600000;
-    const minuty  = Math.floor(pozostalyCzas / 60000);
-    pozostalyCzas %= 60000;
-    const sekundy = Math.floor(pozostalyCzas / 1000);
-
-        document.getElementById("months").textContent = miesiace + (miesiace === 1 ? " miesiąc" : " miesięcy");
-        document.getElementById("days").textContent     = dni     + (dni     === 1 ? " dzień"   : " dni");
-        document.getElementById("hours").textContent = godziny + (godziny === 1 ? " godzina" : " godzin");
-        document.getElementById("minutes").textContent  = minuty  + (minuty  === 1 ? " minuta"  : " minut");
-        document.getElementById("seconds").textContent = sekundy + (sekundy === 1 ? " sekunda" : " sekund");
-}
-setInterval(aktualizuj2, 1000);
-aktualizuj2();
+    setInterval(aktualizujCountdown, 1000);
+    aktualizujCountdown();
   </script>
 </body>
 </html>
