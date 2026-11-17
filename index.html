@@ -210,15 +210,24 @@
       const sekundy = Math.floor(diff / 1000) % 60;
       const minuty  = Math.floor(diff / 60000) % 60;
       const godziny = Math.floor(diff / 3600000) % 24;
-
+      const dni = parseInt(Math.floor(diff / 86400000) % 30.44);
       let lata = 0;
       let miesiace = 0;
       let temp = new Date(dataPoczatkowa);
 
-      while (temp <= teraz) {
-        temp.setMonth(temp.getMonth() + 1);
+      while (true) {
+        // najpierw tworzymy datę za miesiąc
+        const nastepny = new Date(temp);
+        nastepny.setMonth(nastepny.getMonth() + 1);
+
+        // jeśli przekracza "teraz" — kończymy
+        if (nastepny > teraz) break;
+
+        // dopiero teraz zatwierdzamy miesiąc
+        temp = nastepny;
         miesiace++;
-        if (miesiace > 12) {
+
+        if (miesiace >= 12) {
           lata++;
           miesiace = 0;
         }
@@ -228,7 +237,8 @@
       if (lata > 0) {
         tekst += `${lata} ${lata === 1 ? "rok" : (lata < 5 ? "lata" : "lat")}, `;
       }
-      tekst += `${miesiace} ${miesiace === 1 ? "miesiąc" : (miesiace < 5 || (miesiace % 10) >2 ? "miesiące" : "miesięcy")}, `;
+      tekst += `${miesiace} ${miesiace === 1 ? "miesiąc" : (miesiace < 5 && (miesiace % 10) >2 ? "miesiące" : "miesięcy")}, `;
+      tekst += `${dni} ${dni === 1 ? "dzień" : "dni"}, `;
       tekst += `${godziny} ${godziny === 1 ? "godzina" : "godzin"}, `;
       tekst += `${minuty} ${minuty === 1 ? "minuta" : "minut"} i `;
       tekst += `${sekundy} ${sekundy === 1 ? "sekunda" : "sekund"}`;
