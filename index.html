@@ -120,15 +120,16 @@
 
     <div id="id2" class="tab-content">
       <div class="tekst">Mam go od 14.11.2024 r.</div>
+      <div class="tekst" style="font-size: 3vw; margin-top: 15px;" id="licznik">
+        0 lat, 0 miesięcy, 0 dni, 0 godzin, 0 minut i 0 sekund
+      </div>
       <div class="tekst" style="font-size: 4vw;">Co daje:</div>
       <div class="tekst" style="font-size: 3vw;" id="miesiace">0 miesięcy</div>
       <div class="tekst" style="font-size: 3vw;" id="dni">0 dni</div>
       <div class="tekst" style="font-size: 3vw;" id="godziny">0 godzin</div>
       <div class="tekst" style="font-size: 3vw;" id="minuty">0 minut</div>
       <div class="tekst" style="font-size: 3vw;" id="sekundy">0 sekund</div>
-      <div class="tekst" style="font-size: 3vw; margin-top: 15px;" id="licznik">
-        0 lat, 0 miesięcy, 0 dni, 0 godzin, 0 minut i 0 sekund
-      </div>
+      
     </div>
 
     <div id="id3" class="tab-content">
@@ -217,18 +218,17 @@
       while (temp <= teraz) {
         temp.setMonth(temp.getMonth() + 1);
         miesiace++;
-        if (miesiace === 12) {
+        if (miesiace > 12) {
           lata++;
           miesiace = 0;
         }
       }
-      miesiace--;
 
       let tekst = "";
       if (lata > 0) {
         tekst += `${lata} ${lata === 1 ? "rok" : (lata < 5 ? "lata" : "lat")}, `;
       }
-      tekst += `${miesiace} ${miesiace === 1 ? "miesiąc" : (miesiace < 5 ? "miesiące" : "miesięcy")}, `;
+      tekst += `${miesiace} ${miesiace === 1 ? "miesiąc" : (miesiace < 5 || (miesiace % 10) >2 ? "miesiące" : "miesięcy")}, `;
       tekst += `${godziny} ${godziny === 1 ? "godzina" : "godzin"}, `;
       tekst += `${minuty} ${minuty === 1 ? "minuta" : "minut"} i `;
       tekst += `${sekundy} ${sekundy === 1 ? "sekunda" : "sekund"}`;
@@ -276,7 +276,7 @@
       diff %= 60000;
       const sekundy = Math.floor(diff / 1000);
 
-      document.getElementById("months").textContent  = miesiace.toString().padStart(1, '0') + ` ${miesiace === 1 ? "miesiąc" : (miesiace < 5 ? "miesiące" : "miesięcy")} `;
+      document.getElementById("months").textContent  = miesiace.toString().padStart(1, '0') + ` ${miesiace === 1 ? "miesiąc" : (miesiace < 5 || (Math.floor(miesiace)%10)>1 ? "miesiące" : "miesięcy")} `;
       document.getElementById("days").textContent    = dni.toString().padStart(1, '0') + ` ${dni === 1 ? "dzień" : "dni"}`;
       document.getElementById("hours").textContent   = godziny.toString().padStart(1, '0') + ` ${godziny === 1 ? "godzina" : "godzin"}`;
       document.getElementById("minutes").textContent = minuty.toString().padStart(1, '0') + ` ${minuty === 1 ? "minuta" : "minut"}`;
